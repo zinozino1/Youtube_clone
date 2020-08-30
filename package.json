@@ -1,0 +1,11 @@
+{
+  "name": "youtube_clone",
+  "version": "1.0.0",
+  "description": "this is youtube clone",
+  "main": "index.js",
+  "author": "Jinho",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

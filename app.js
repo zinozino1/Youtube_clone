@@ -14,7 +14,7 @@ import routes from "./routes"
 
 const app = express();
 
-
+app.set('view engine', "pug");
 
 // 모든 라우트들에 적용되는 미들웨어 - 작성된 대로 순서대로 미들웨어가 실행된다.
 app.use(bodyParser.json());

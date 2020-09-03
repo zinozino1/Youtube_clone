@@ -2,4 +2,9 @@ extends layouts/main.pug
 
 
 block content 
-    h4 fuck you
+    .form_container
+        form(action=routes.join, method="post")
+            input(type="email", name="email", placeholder="Email")
+            input(type="password", name="password", placeholder="Password")
+            input(type="submit", value="Login")
+        include ./partials/socialLogin

@@ -4,7 +4,8 @@ header.header
         a(href=routes.home)
             i.fab.fa-youtube
     .header__column
-        form(action=routes.search, method="get")
+        //- 이건 그냥 searching 데이터이므로 GET으로 넘겨도 상관 없음
+        form(action=routes.search, method="get") 
             input(type="text" placeholder="such as...", name="term")
     .header__column
         ul

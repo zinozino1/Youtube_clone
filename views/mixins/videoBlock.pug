@@ -1,0 +1,7 @@
+//- html구조를 함수화시킴
+mixin videoBlock(video ={})
+    .videoBlock 
+        //- 함수 안에서는 = 써야되는듯?(클래스명에 딱 붙여 써야함)
+        video.videoBlock__thumbnail(src=video.videoFile, controls=true)
+        h4.videoBlock__title=video.title
+        h6.videoBlock__views=video.views

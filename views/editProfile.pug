@@ -2,4 +2,12 @@ extends layouts/main.pug
 
 
 block content 
-    h4 fuck you
+    .form-container
+        form(action=routes.editProfile, method="post")
+            //- label : 컨트롤에 제목을 붙여주는 역할
+            label(for="avatar") Avatar
+            input(type="file", id="avatar", name="avatar")
+            input(type="text", placeholder="Name", name="name")
+            input(type="email", placeholder="Email", name="email")
+            input(type="submit", value="Update Profile")
+        a.form-container__link(href="/user/change-password") Change Password

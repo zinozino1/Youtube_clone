@@ -1,6 +1,16 @@
 extends layouts/main.pug 
-
+include mixins/videoBlock
 
 block content 
     .videos
-        h1 Video
+        //- videoList : 객체 배열
+        //- video : 객체 
+        //- // forEach랑 비슷한듯?
+        each video in videoList
+            //- h4= video.title
+            //- p= video.description
+            +videoBlock({
+                title:video.title,
+                views:video.views,
+                videoFile:video.videoFile
+            })

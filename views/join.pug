@@ -3,10 +3,11 @@ extends layouts/main.pug
 
 block content 
     .form-container
+        //- form 에서 전송하는 정보가 join라우트로 들어가게 설정
         form(action=routes.join, method="post")
-            input(type="text", name="name", placeholder="Name")
-            input(type="email", name="email", placeholder="Email")
-            input(type="password", name="password", placeholder="Password")
-            input(type="password", name="password2", placeholder="Verify Password")
+            input(type="text", name="name", placeholder="Name", required=true)
+            input(type="email", name="email", placeholder="Email", required=true)
+            input(type="password", name="password", placeholder="Password", required=true)
+            input(type="password", name="password2", placeholder="Verify Password", required=true)
             input(type="submit", value="Join Now")
         include ./partials/socialLogin

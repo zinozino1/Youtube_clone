@@ -9,7 +9,19 @@ header.header
             input(type="text" placeholder="such as...", name="term")
     .header__column
         ul
-            li 
-                a(href=routes.join) Join
-            li
-                a(href=routes.login) Login
+            //- 유저정보가 일치하지 않는다면 
+            if !user.isAuthenticated
+                li 
+                    a(href=routes.join) Join
+                li
+                    a(href=routes.login) Login
+            //- 유저정보가 일치한다면 
+            else
+                li
+                    a(href='/video'+routes.upload) Upload
+                li
+                    a(href=routes.userDetail(user.id)) Profile
+                li
+                    a(href=routes.logout) log out
+                //- (#{user.isAuthenticated = true})
+                    

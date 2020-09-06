@@ -1,7 +1,7 @@
 import express from "express";
 import routes from "../routes"
 import {home, search} from "../controllers/videoController";
-import { join, login, logout } from "../controllers/userController"; // default export가 아니기 때문에 중괄호 사용가능 
+import { getJoin,postJoin, getLogin,postLogin, logout } from "../controllers/userController"; // default export가 아니기 때문에 중괄호 사용가능 
 
 const globalRouter = express.Router();
 
@@ -12,8 +12,12 @@ const globalRouter = express.Router();
 globalRouter.get(routes.home, home)
 globalRouter.get(routes.search, search)
 // userController
-globalRouter.get(routes.join, join)
-globalRouter.get(routes.login, login)
+globalRouter.get(routes.join, getJoin)
+globalRouter.post(routes.join, postJoin)
+
+globalRouter.get(routes.login, getLogin)
+globalRouter.post(routes.login, postLogin)
+
 globalRouter.get(routes.logout, logout)
 
 

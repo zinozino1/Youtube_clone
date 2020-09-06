@@ -15,7 +15,7 @@ export default userRouter;
 userRouter.get(routes.users, users);
 userRouter.get(routes.editProfile, editProfile);
 userRouter.get(routes.changePassword, changePassword);
-userRouter.get(routes.userDetail, userDetail); // /:id이므로 맨 마지막에 둬야하나? 외우자 ㅅㅂ
+userRouter.get(routes.userDetail(), userDetail); // /:id이므로 맨 마지막에 둬야하나? 외우자 ㅅㅂ
 
 
 /*

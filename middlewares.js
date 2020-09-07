@@ -1,5 +1,5 @@
 import routes from "./routes"
-
+// 템플릿에서 사용할 수 있는 글로벌 변수 정의
 export const localsMiddleWare = (req, res, next) => {
     
     res.locals.siteName = 'HoooouTube'; // 이녀석은 글로벌 변수가 되었다.

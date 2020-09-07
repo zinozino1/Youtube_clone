@@ -1,4 +1,3 @@
-import {videoList} from "../db"
 import routes from "../routes";
 import { localsMiddleWare } from "../middlewares";
 export const getJoin = (req, res) => {

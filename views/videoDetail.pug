@@ -1,7 +1,21 @@
 extends layouts/main.pug 
+include mixins/videoBlock
 
 //- 여긴 localhost:4000/video/n 으로 올 경우
 
 
 block content 
-    h4 n개의 비디오
+    .video__player
+        video(src='/'+video.fileUrl)
+    .video__info
+        a(href=routes.editVideo(video.id)) Edit Video
+        h5.video__title=video.title
+        span.video__views=video.views
+        p.video__description=video.description
+    .video__comment
+        if video.comments.length === 1
+            span.video__comment-number 1 comment
+        else
+            span.video__comment-number #{video.comments.length} comments
+
+    //- +videoBlock()

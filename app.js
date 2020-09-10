@@ -37,6 +37,9 @@ app.use(function(req, res, next) {
 
 // Uri에 따라 분기하도록하는 미들웨어
 // app.use('경로', 라우터) 형태
+
+// 주어진 디렉토리에서 파일을 전달하는 미들웨어
+app.use("/uploads",express.static("uploads"));
 app.use("/user", userRouter); 
 app.use("/video", videoRouter);
 app.use("/", globalRouter);

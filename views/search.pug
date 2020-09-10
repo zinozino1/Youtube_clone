@@ -5,8 +5,11 @@ block content
     .search__header
         h3 Searching for :  #{searchingBy}
     .search__videos
+        if videoList.length === 0
+            h5 Video Not Found
         each video in videoList
             +videoBlock({
+                id:video.id,
                 title:video.title,
                 views:video.views,
                 videoFile:video.videoFile

@@ -49,8 +49,21 @@ const routes = {
             return VIDEO_DETAIL;
         }
     },
-    editVideo: EDIT_VIDEO,
-    deleteVideo: DELETE_VIDEO
+    editVideo: (id) => {
+        if(id){
+            return `/video/${id}/edit`
+        }else{
+            return EDIT_VIDEO;
+        }
+    },
+    deleteVideo: (id) => {
+        if(id){
+            return `/video/${id}/delete`
+        }
+        else{
+            return DELETE_VIDEO;
+        }
+    }
   };
 
   export default routes; // 이렇게 선언함으로써 어디에서든지 사용할 수 있게 되었다. 

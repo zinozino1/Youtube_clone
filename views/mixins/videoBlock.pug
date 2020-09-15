@@ -3,6 +3,10 @@ mixin videoBlock(video ={})
     .videoBlock 
         a(href=routes.videoDetail(video.id))
             //- 함수 안에서는 = 써야되는듯?(클래스명에 딱 붙여 써야함)
-            video.videoBlock__thumbnail(src=video.videoFile, controls=true)
+            video.videoBlock__thumbnail(src=video.videoFile, controls=false)
             h4.videoBlock__title=video.title
-            h6.videoBlock__views=video.views
+           
+            if video.views === 1
+                h6.videoBlock__views 1 view
+            else
+                h6.videoBlock__views #{video.views} views 

@@ -2,7 +2,7 @@ extends layouts/main.pug
 include mixins/videoBlock
 
 block content 
-    .videos
+    .home-videos
         //- videoList : 객체 배열
         //- video : 객체 
         //- // forEach랑 비슷한듯?
@@ -10,8 +10,74 @@ block content
             //- h4= video.title
             //- p= video.description
             +videoBlock({
+                id:video.id,
                 title:video.title,
                 views:video.views,
                 videoFile:video.fileUrl,
-                id:video.id
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
+            })
+             +videoBlock({
+                id:video.id,
+                title:video.title,
+                views:video.views,
+                videoFile:video.fileUrl,
             })

@@ -1,27 +1,24 @@
 
 header.header
-    .header__column
-        a(href=routes.home)
-            i.fab.fa-youtube
-    .header__column
-        //- 이건 그냥 searching 데이터이므로 GET으로 넘겨도 상관 없음
-        form(action=routes.search, method="get") 
-            input(type="text" placeholder="such as...", name="term")
-    .header__column
-        ul
-            //- 유저정보가 일치하지 않는다면 
-            if !user.isAuthenticated
-                li 
-                    a(href=routes.join) Join
-                li
-                    a(href=routes.login) Login
-            //- 유저정보가 일치한다면 
-            else
-                li
-                    a(href='/video'+routes.upload) Upload
-                li
-                    a(href=routes.userDetail(user.id)) Profile
-                li
-                    a(href=routes.logout) log out
-                //- (#{user.isAuthenticated = true})
+    .header__wrapper
+        .header__column
+            a(href=routes.home)
+                i.fab.fa-youtube
+        .header__column
+            form(action=routes.search, method="get")
+                input(type="text", placeholder="Search by term...", name="term")
+        .header__column
+            ul
+                if !user
+                    li
+                        a(href=routes.join) Join
+                    li
+                        a(href=routes.login) Log In
+                else 
+                    li
+                        a(href=`/videos${routes.upload}`) Upload
+                    li
+                        a(href=routes.userDetail(user.id)) Profile
+                    li
+                        a(href=routes.logout) Log Out
                     

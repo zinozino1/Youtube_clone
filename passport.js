@@ -1,7 +1,24 @@
 import passport from "passport";
 import User from "./models/User";
+import GithubStrategy from "passport-github";
+import { githubLoginCallback } from "./controllers/userController";
+import routes from "./routes";
 
-passport.use(User.createStrategy());
+// passport 미들웨어 설정
+// 1. strategy 설정에 해당된다.
+
+passport.use(User.createStrategy()); // local 유저인증은 몽구스 스키마로 바로 가능한듯
+passport.use(
+    new GithubStrategy(
+        {
+            clientID: process.env.GH_ID,
+            clientSecret: process.env.GH_SECRET,
+            callbackURL: `http://localhost:4000${routes.githubCallback}`,
+            scope: "user:email",
+        },
+        githubLoginCallback,
+    ),
+);
 
 // 쿠키에 id넣기
 passport.serializeUser(User.serializeUser());

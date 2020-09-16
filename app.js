@@ -17,18 +17,20 @@ import globalRouter from "./routers/globalRouter";
 import { localsMiddleWare } from "./middlewares";
 import connect_flash from "connect-flash";
 import routes from "./routes";
-import "./passport";
+import "./passport"; // 패스포트 준비
 const app = express();
 const CokieStore = MongoStore(session);
 // 모든 라우트들에 적용되는 미들웨어 - 작성된 대로 순서대로 미들웨어가 실행된다.
+
 // app.use(함수) 형태
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 app.set("view engine", "pug");
 app.use(cookieParser()); // 쿠키를 가져옴
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(
+    // 쿠키있을 떄랑 쿠키 없을떄랑 비교하자
     // 암호화된 쿠키정보를 해독한다
     session({
         secret: process.env.COOKIE_SECRET, // 암호화된 세션id를 보내고, 받음
@@ -39,11 +41,11 @@ app.use(
     }),
 );
 // 해독된 쿠키정보 (id, email등)가 일로 넘어온다.
-app.use(passport.initialize()); // 쿠키파서를 검사
+app.use(passport.initialize()); // passport구동
 
 // -> id가 여기로 넘겨지면 passport.js의 deserialize함수 실행된다.
 // -> deserialize함수가 실행되면 req.user정보가 미들웨어로 합류하게되어서 모든 라우터에서 시용 가능하게 된다.
-app.use(passport.session());
+app.use(passport.session()); // 세션 연결
 
 // 이 이후로는 req.user가 생긴다.
 

@@ -12,7 +12,7 @@ export const localsMiddleWare = (req, res, next) => {
     // user가 존재하지 않는다면 빈 객체 반환
 
     // req.user는 passport의 deserializeUser에서 온다.
-    res.locals.user = req.user || null; // passport가 처리해준다? -> header.pug에서 쓰인다. 잘 볼것
+    res.locals.loggedUser = req.user || null; // passport가 처리해준다? -> header.pug에서 쓰인다. 잘 볼것
 
     console.log(req.user);
     next();

@@ -12,6 +12,7 @@ const USERS = "/users";
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
 const USER_DETAIL = "/:id"; // 이건 모지?
+const ME = "/me";
 
 // Videos
 
@@ -19,8 +20,12 @@ const VIDEOS = "/videos";
 const UPLOAD = "/upload";
 const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
-const DELETE_VIDEO = "/:id/delete"
+const DELETE_VIDEO = "/:id/delete";
 
+// Github
+
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK = "/auth/github/callback";
 
 const routes = {
     home: HOME,
@@ -29,11 +34,10 @@ const routes = {
     logout: LOGOUT,
     search: SEARCH,
     users: USERS,
-    userDetail: (id) =>{
-        if(id){
-            return `/user/${id}`
-        }
-        else{
+    userDetail: (id) => {
+        if (id) {
+            return `/user/${id}`;
+        } else {
             return USER_DETAIL;
         }
     },
@@ -41,29 +45,30 @@ const routes = {
     changePassword: CHANGE_PASSWORD,
     videos: VIDEOS,
     upload: UPLOAD,
-    videoDetail: (id)=>{
-        if(id){
-            return `/video/${id}`
-        }
-        else{
+    videoDetail: (id) => {
+        if (id) {
+            return `/video/${id}`;
+        } else {
             return VIDEO_DETAIL;
         }
     },
     editVideo: (id) => {
-        if(id){
-            return `/video/${id}/edit`
-        }else{
+        if (id) {
+            return `/video/${id}/edit`;
+        } else {
             return EDIT_VIDEO;
         }
     },
     deleteVideo: (id) => {
-        if(id){
-            return `/video/${id}/delete`
-        }
-        else{
+        if (id) {
+            return `/video/${id}/delete`;
+        } else {
             return DELETE_VIDEO;
         }
-    }
-  };
+    },
+    github: GITHUB,
+    githubCallback: GITHUB_CALLBACK,
+    me: ME,
+};
 
-  export default routes; // 이렇게 선언함으로써 어디에서든지 사용할 수 있게 되었다. 
+export default routes; // 이렇게 선언함으로써 어디에서든지 사용할 수 있게 되었다.

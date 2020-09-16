@@ -2,4 +2,7 @@ extends layouts/main.pug
 
 
 block content 
-    h4 fuck you
+    .user-profile
+        .user-profile__header
+            img(src=user.avatarUrl, alt="")
+            h4.profile__username=user.name

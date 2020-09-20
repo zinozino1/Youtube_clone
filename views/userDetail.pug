@@ -4,5 +4,12 @@ extends layouts/main.pug
 block content 
     .user-profile
         .user-profile__header
-            img(src=user.avatarUrl, alt="")
+            img.u-avatar(src=user.avatarUrl)
             h4.profile__username=user.name
+            //- 로그인한 유저와 요청하는 유저가 같다면
+        if user.id === loggedUser.id
+            .user-profile__btns
+                a(href=`/user${routes.editProfile}`)
+                    button ✏️ Edit Profile
+                a(href=`/user${routes.changePassword}`)
+                    button 🔒 Change Password 

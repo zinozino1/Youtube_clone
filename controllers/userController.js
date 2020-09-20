@@ -38,6 +38,7 @@ export const postJoin = async (req, res, next) => {
 export const getLogin = (req, res) =>
     res.render("login", { pageTitle: "Login" });
 export const postLogin = passport.authenticate("local", {
+    // 디비에 잇는 정보와 대조하여 로그인시키고 로그인된 정보를 브라우저 쿠키에 저장시킨다.
     failureRedirect: routes.login,
     successRedirect: routes.home,
     //failureFlash: "Invalid username or password.",
@@ -58,7 +59,6 @@ export const githubLoginCallback = async (
         _json: { id, avatar_url, login }, // github에서 제공하는 유저 프로필
     } = profile;
     const { value: email } = profile.emails.filter((item) => item.primary)[0];
-    console.log(profile);
     try {
         const user = await User.findOne({
             email: email, // github에서 가져온 이메일과 동일한 이메일을 가진 유저를 디비에서 찾는다.
@@ -94,15 +94,66 @@ export const logout = (req, res) => {
     res.redirect(routes.home);
 };
 
+//내 프로필
+// req.user === 로그인되어 있는 유저(나)
 export const getMe = (req, res) => {
+    // global 변수인 loggeduser를 req.user로 오버라이딩 한 것
     res.render("userDetail", { pageTitle: "User", user: req.user });
 }; // req.user는 현재 로그인 된 사용자
-export const users = (req, res) =>
-    // global 변수인 loggeduser를 req.user로 오버라이딩 한 것
-    res.render("user", { pageTitle: "User" });
-export const userDetail = (req, res) =>
-    res.render("userDetail", { pageTitle: "User Detail" });
-export const editProfile = (req, res) =>
+export const users = (req, res) => res.render("user", { pageTitle: "User" });
+// 다른 유저 검색.
+// user === 디비에 저장되어 있는 다른 유저
+export const userDetail = async (req, res) => {
+    const {
+        params: { id },
+    } = req;
+    try {
+        const user = await User.findById(id); // 여기서 에러를 발생시키는 구만
+        res.render("userDetail", { pageTitle: "User Detail", user: user });
+    } catch (error) {
+        res.redirect(routes.home);
+    }
+};
+
+export const getEditProfile = (req, res) => {
     res.render("editProfile", { pageTitle: "Edit Profile" });
-export const changePassword = (req, res) =>
+};
+
+export const postEditProfile = async (req, res) => {
+    const {
+        user: { avatarUrl },
+        body: { name, email },
+        file, // multer가 제공해주는 것 이 함수 앞에 uploadAvatar 미들웨어가 있는 것을 기억하자
+    } = req;
+    try {
+        const user = await User.findByIdAndUpdate(req.user.id, {
+            name,
+            email,
+            avatarUrl: file ? file.path : avatarUrl,
+        });
+        res.redirect(routes.me);
+    } catch (error) {
+        console.log(error);
+        res.redirect("editProfile", { pageTitle: "Edit profile" });
+    }
+};
+export const getChangePassword = (req, res) =>
     res.render("changePassword", { pageTitle: "Change Password" });
+export const postChangePassword = async (req, res) => {
+    const {
+        body: { oldPassword, newPassword, newPassword1 },
+    } = req;
+    try {
+        if (newPassword !== newPassword1) {
+            res.status(400); // 브라우저에게 상태전달
+            res.redirect("/user" + routes.changePassword);
+            return; // 리디렉션에서 끝났는데 넌 왜?
+        } else {
+        }
+        await req.user.changePassword(oldPassword, newPassword); // passport의 기능
+        res.redirect(routes.me);
+    } catch (error) {
+        res.redirect("/user" + routes.changePassword);
+        console.log(error);
+    }
+};

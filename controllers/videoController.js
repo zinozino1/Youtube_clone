@@ -9,6 +9,7 @@ export const home = async (req, res) => {
     // async를 사용하지 않는다면 많은 수의 비디오가 아직 업로드 되지 않았다(디비에서 아직 꺼내오지 못했다 하더라도) 하더라도 홈페이지를 렌더링함 (노드는 비동기프로그래밍 기반)
     // but async를 사용한다면 비디오가 모두 업로드될 때까지 홈페이지를 렌더링하지 않는다.
 
+    console.log(req.user);
     try {
         const videos = await Video.find({}).sort({ _id: -1 }); // 모델을 통해 데이터베이스에 있는 모든 비디오들을 가져오게된다.
         // Video.find() 작업이 끝날때까지 기다려줘
@@ -38,7 +39,7 @@ export const search = async (req, res) => {
             title: { $regex: searchingBy, $options: "i" },
         });
     } catch (error) {
-        console.log();
+        console.log(error);
     }
     res.render("search", {
         pageTitle: "Search",
@@ -62,8 +63,11 @@ export const postUpload = async (req, res) => {
         fileUrl: path,
         title: title,
         description: description, // 여기서 실제 데이터베이스에 저장?
+        creator: req.user.id,
     });
 
+    await req.user.videos.push(newVideo.id); // 존내 신기하네 _id아니고 id
+    req.user.save();
     // Todo : upload and save video
     // 사용자가 비디오를 업로드하면 해당 비디오디테일 페이지로 리다이렉트 해야함
     res.redirect(routes.videoDetail(newVideo.id));
@@ -75,7 +79,11 @@ export const videoDetail = async (req, res) => {
         params: { id },
     } = req;
     try {
-        const video = await Video.findById(id);
+        const video = await Video.findById(id).populate("creator");
+
+        console.log(video);
+
+        // 가져올 객체를 세분화 시킨다. 즉 Video객체를 가져오는 것 같지만 사실은 User 객체를 가져오는 것
 
         res.render("videoDetail", {
             pageTitle: video.title,
@@ -121,7 +129,7 @@ export const deleteVideo = async (req, res) => {
     const {
         params: { id },
     } = req;
-    console.log(req.params);
+    // console.log(req.params);
     try {
         const video = await Video.findByIdAndRemove(id);
         res.redirect(routes.home);

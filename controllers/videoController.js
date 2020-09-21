@@ -67,7 +67,7 @@ export const postUpload = async (req, res) => {
     });
 
     await req.user.videos.push(newVideo.id); // 존내 신기하네 _id아니고 id
-    req.user.save();
+    req.user.save(); // User.findByIdAndUpdate 하지 않으므로 수동으로 저장해야 하는듯.
     // Todo : upload and save video
     // 사용자가 비디오를 업로드하면 해당 비디오디테일 페이지로 리다이렉트 해야함
     res.redirect(routes.videoDetail(newVideo.id));
@@ -80,8 +80,7 @@ export const videoDetail = async (req, res) => {
     } = req;
     try {
         const video = await Video.findById(id).populate("creator");
-
-        console.log(video);
+        // creator는 id를 링크하는 형식으로 되어있는데 그걸 구체화 시킨 것.
 
         // 가져올 객체를 세분화 시킨다. 즉 Video객체를 가져오는 것 같지만 사실은 User 객체를 가져오는 것
 
@@ -100,11 +99,19 @@ export const getEditVideo = async (req, res) => {
         params: { id },
     } = req;
     try {
-        const video = await Video.findById(id);
-        res.render("editVideo", {
-            pageTitle: "Edit " + video.title,
-            video: video,
-        });
+        const video = await Video.findById(id); // 여기서 비디오는 populate하지 않음. 단순히 링크만 이용한 듯
+
+        if (video.creator != req.user.id) {
+            // 이놈은 != 해줘야함
+            // pug에선 그냥 버튼만 안보이게 했는데 실제 로직에서도 보호 해줘야함.
+
+            throw Error();
+        } else {
+            res.render("editVideo", {
+                pageTitle: "Edit " + video.title,
+                video: video,
+            });
+        }
     } catch (error) {
         res.redirect(routes.home);
     }
@@ -122,6 +129,7 @@ export const postEditVideo = async (req, res) => {
         ); // DB수정
         res.redirect(routes.videoDetail(id));
     } catch (error) {
+        ㄴ;
         res.redirect(routes.home);
     }
 };
@@ -131,8 +139,13 @@ export const deleteVideo = async (req, res) => {
     } = req;
     // console.log(req.params);
     try {
-        const video = await Video.findByIdAndRemove(id);
-        res.redirect(routes.home);
+        const video = await Video.findById(id);
+        if (video.creator != req.user.id) {
+            throw Error();
+        } else {
+            await Video.findByIdAndRemove(id);
+            res.redirect(routes.home);
+        }
     } catch (error) {
         res.redirect(routes.home);
     }

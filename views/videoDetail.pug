@@ -1,16 +1,22 @@
 extends layouts/main.pug 
 include mixins/videoBlock
-
+include partials/videoPlayer.pug
 //- 여긴 localhost:4000/video/n 으로 올 경우
 
 
 block content 
     .video-detail__container
-        .video__player
-            video(src=`/${video.fileUrl}`)
+        +videoPlayer({
+            src:video.fileUrl
+
+        })
         .video__info
-            a(href=routes.editVideo(video.id))
-                button Edit video
+            //- 비로그인 유저는 edit할 수 없다. + 비디오를 만든 사람과 로그인된 사람이 일치해야함
+            if loggedUser
+                
+                if video.creator.id === loggedUser.id  
+                    a(href=routes.editVideo(video.id))
+                        button Edit video
             h5.video__title=video.title
             p.video__description=video.description
             if video.views === 1
@@ -18,8 +24,8 @@ block content
             else 
                 span.video__views #{video.views} views
             .video__author
-                |Uploaded By
-                //- a(href=routes.userDetail(1))=user.name
+                |Uploaded By   
+                a(href=routes.userDetail(video.creator.id))=video.creator.name
         .video__comments
             if video.comments.length === 1
                 span.video__comment-number 1 comment

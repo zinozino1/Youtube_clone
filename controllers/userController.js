@@ -108,7 +108,8 @@ export const userDetail = async (req, res) => {
         params: { id },
     } = req;
     try {
-        const user = await User.findById(id); // 여기서 에러를 발생시키는 구만
+        const user = await User.findById(id).populate("videos"); // 여기서 에러를 발생시키는 구만
+
         res.render("userDetail", { pageTitle: "User Detail", user: user });
     } catch (error) {
         res.redirect(routes.home);

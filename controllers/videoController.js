@@ -195,17 +195,14 @@ export const postAddComment = async (req, res) => {
 
         const newComment = await Comment.create({
             text: comment,
-
             creator: user.id,
         });
-
         video.comments.push(newComment.id);
-
         video.save();
     } catch (error) {
         console.log(error);
-        res.status(404);
+        res.status(400);
     } finally {
-        res.end();
+        res.end(); // res.send로 끝을내지 않기 때문에 res.end해줘야함
     }
 };

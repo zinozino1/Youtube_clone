@@ -1,6 +1,7 @@
 // import {videoList} from "../db"
 import routes from "../routes";
 import Video from "../models/Video"; // video element자체가 아니라 model : element를 받는 통로라는 것을 인지하자.
+import Comment from "../models/Comment";
 
 // 이부분 매우매우매우 중요
 export const home = async (req, res) => {
@@ -79,7 +80,11 @@ export const videoDetail = async (req, res) => {
         params: { id },
     } = req;
     try {
-        const video = await Video.findById(id).populate("creator");
+        const video = await Video.findById(id)
+            .populate("creator")
+            .populate("comments");
+
+        console.log(video);
         // creator는 id를 링크하는 형식으로 되어있는데 그걸 구체화 시킨 것.
 
         // 가져올 객체를 세분화 시킨다. 즉 Video객체를 가져오는 것 같지만 사실은 User 객체를 가져오는 것
@@ -163,6 +168,7 @@ export const postRegisterView = async (req, res) => {
     const {
         params: { id },
     } = req;
+    // console.log(req.body);
     try {
         const video = await Video.findById(id);
         video.views += 1;
@@ -172,5 +178,34 @@ export const postRegisterView = async (req, res) => {
         res.status(400);
     } finally {
         res.end(); // 머지?
+    }
+};
+
+export const postAddComment = async (req, res) => {
+    const {
+        params: { id },
+        body: { comment },
+        user,
+    } = req;
+    // console.log("req.body:");
+    console.log(req.body); // ajax요청으로 body가 온다!
+    //console.log(comment);
+    try {
+        const video = await Video.findById(id);
+
+        const newComment = await Comment.create({
+            text: comment,
+
+            creator: user.id,
+        });
+
+        video.comments.push(newComment.id);
+
+        video.save();
+    } catch (error) {
+        console.log(error);
+        res.status(404);
+    } finally {
+        res.end();
     }
 };

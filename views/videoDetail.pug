@@ -31,5 +31,12 @@ block content
                 span.video__comment-number 1 comment
             else
                 span.video__comment-number #{video.comments.length} comments 
-
+            //- ajax처리를 위해 route url을 넣지 않음.
+            form.add__comment#jsAddComment
+                input(type="text", placeholder="Add a Comment")
+            ul.video__comment-list
+                each comment in video.comments
+                    li
+                        span=comment.text
+                    
     //- +videoBlock()

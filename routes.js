@@ -27,6 +27,11 @@ const DELETE_VIDEO = "/:id/delete";
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
 
+// API - just server와 통신하기 위한 URL : user가 접근 x 이 url에 어떤것도 렌더링할 수 없다.
+
+const API = "/api";
+const REGISTER_VIEW = "/:id/view";
+
 const routes = {
     home: HOME,
     join: JOIN,
@@ -69,6 +74,8 @@ const routes = {
     github: GITHUB,
     githubCallback: GITHUB_CALLBACK,
     me: ME,
+    api: API,
+    registerView: REGISTER_VIEW,
 };
 
 export default routes; // 이렇게 선언함으로써 어디에서든지 사용할 수 있게 되었다.

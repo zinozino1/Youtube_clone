@@ -150,3 +150,27 @@ export const deleteVideo = async (req, res) => {
         res.redirect(routes.home);
     }
 };
+
+export const getRegisterView = async (req, res) => {
+    try {
+    } catch (error) {
+    } finally {
+    }
+};
+
+// 렌더링 없이 (view 없이) 단지 서버랑 통신하는 것.
+export const postRegisterView = async (req, res) => {
+    const {
+        params: { id },
+    } = req;
+    try {
+        const video = await Video.findById(id);
+        video.views += 1;
+        video.save(); // 왜 save?
+        res.status(200);
+    } catch (error) {
+        res.status(400);
+    } finally {
+        res.end(); // 머지?
+    }
+};

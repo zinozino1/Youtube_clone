@@ -18,6 +18,7 @@ import { localsMiddleWare } from "./middlewares";
 import connect_flash from "connect-flash";
 import routes from "./routes";
 import "./passport"; // 패스포트 준비
+import { apiRouter } from "./routers/apiRouter";
 const app = express();
 const CokieStore = MongoStore(session);
 // 모든 라우트들에 적용되는 미들웨어 - 작성된 대로 순서대로 미들웨어가 실행된다.
@@ -67,5 +68,7 @@ app.use("/static", express.static("static"));
 app.use("/user", userRouter);
 app.use("/video", videoRouter);
 app.use("/", globalRouter);
+// /api
+app.use(routes.api, apiRouter);
 
 export default app;

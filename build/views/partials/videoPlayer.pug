@@ -1,13 +1,13 @@
 mixin videoPlayer(video = {})
     h1 Original
         video(controls='', width="1200px")
-            source(src=`/${video.src}`, type='video/webm')
-            source(src=`/${video.src}`, type='video/mp4')
+            source(src=video.src, type='video/webm')
+            source(src=video.src, type='video/mp4')
         br
     .videoPlayer#jsVideoPlayer
         
         h1 Custom
-        video(src=`/${video.src}`)
+        video(src=video.src)
   
 
         .videoPlayer__controls

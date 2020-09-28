@@ -56,12 +56,12 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
     const {
         body: { title, description },
-        file: { path }, // multer미들웨어로부터 얻은 프로퍼티
+        file: { location }, // multer미들웨어로부터 얻은 프로퍼티
     } = req;
 
     const newVideo = await Video.create({
         // 모델로부터 생성한 것 id는 자동으로 생성되는 듯?
-        fileUrl: path,
+        fileUrl: location,
         title: title,
         description: description, // 여기서 실제 데이터베이스에 저장?
         creator: req.user.id,
@@ -83,8 +83,7 @@ export const videoDetail = async (req, res) => {
         const video = await Video.findById(id)
             .populate("creator")
             .populate("comments");
-
-        console.log(video);
+        // console.log(video.comments[0].creator);
         // creator는 id를 링크하는 형식으로 되어있는데 그걸 구체화 시킨 것.
 
         // 가져올 객체를 세분화 시킨다. 즉 Video객체를 가져오는 것 같지만 사실은 User 객체를 가져오는 것
@@ -177,7 +176,7 @@ export const postRegisterView = async (req, res) => {
     } catch (error) {
         res.status(400);
     } finally {
-        res.end(); // 머지?
+        res.end(); // 머지? -> res.send or res.redirect or res.render로 끝을내지 않기 때문에 res.end해줘야함
     }
 };
 
@@ -187,8 +186,9 @@ export const postAddComment = async (req, res) => {
         body: { comment },
         user,
     } = req;
+
     // console.log("req.body:");
-    console.log(req.body); // ajax요청으로 body가 온다!
+    //console.log(req.body); // ajax요청으로 body가 온다!
     //console.log(comment);
     try {
         const video = await Video.findById(id);
@@ -199,10 +199,28 @@ export const postAddComment = async (req, res) => {
         });
         video.comments.push(newComment.id);
         video.save();
+        //res.set(`Content-Type`, `text/html`);
+        res.send({ id: newComment.id });
     } catch (error) {
         console.log(error);
+        res.status(400, newComment.id);
+    } finally {
+        res.end();
+    }
+};
+
+export const postDeleteComment = async (req, res) => {
+    const {
+        body: { comment },
+        user,
+    } = req;
+    console.log(user.comments);
+    // console.log(typeof comment);
+    try {
+        await Comment.findByIdAndRemove(comment);
+    } catch (error) {
         res.status(400);
     } finally {
-        res.end(); // res.send로 끝을내지 않기 때문에 res.end해줘야함
+        res.end();
     }
 };

@@ -32,6 +32,7 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
 const ADD_COMMENT = "/:id/comment";
+const DELETE_COMMENT = "/:id/delete-comment";
 
 const routes = {
     home: HOME,
@@ -78,6 +79,7 @@ const routes = {
     api: API,
     registerView: REGISTER_VIEW,
     addComment: ADD_COMMENT,
+    deleteComment: DELETE_COMMENT,
 };
 
 export default routes; // 이렇게 선언함으로써 어디에서든지 사용할 수 있게 되었다.

@@ -133,7 +133,6 @@ export const postEditVideo = async (req, res) => {
         ); // DB수정
         res.redirect(routes.videoDetail(id));
     } catch (error) {
-        ㄴ;
         res.redirect(routes.home);
     }
 };

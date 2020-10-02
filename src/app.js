@@ -14,7 +14,7 @@ import MongoStore from "connect-mongo";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
-import { localsMiddleWare } from "./middlewares";
+import { localsMiddleWare } from "../middlewares";
 import connect_flash from "connect-flash";
 import routes from "./routes";
 import "./passport"; // 패스포트 준비

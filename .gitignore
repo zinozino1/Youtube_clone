@@ -9,6 +9,7 @@
 package-lock.json
 uploads
 static
+build
 
 # Logs
 logs

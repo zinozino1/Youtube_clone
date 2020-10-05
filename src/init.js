@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import dotenv from "dotenv";
 import "./db"; // 이게 가능하네. init.js를 실행할 때 db.js를 실행시킨다는 의미 같은디
 import app from "./app";

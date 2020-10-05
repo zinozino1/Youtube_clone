@@ -1,7 +1,10 @@
 // ** 서버를 생성하기 위해 준비 **
 process.setMaxListeners(50);
+
 import dotenv from "dotenv";
 dotenv.config();
+// build에서 view를 찾게 해줘야함.
+import path from "path";
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -14,7 +17,7 @@ import MongoStore from "connect-mongo";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
-import { localsMiddleWare } from "../middlewares";
+import { localsMiddleWare } from "./middlewares";
 import connect_flash from "connect-flash";
 import routes from "./routes";
 import "./passport"; // 패스포트 준비
@@ -26,6 +29,8 @@ const CokieStore = MongoStore(session);
 // app.use(함수) 형태
 app.use(helmet({ contentSecurityPolicy: false }));
 app.set("view engine", "pug");
+// views를 build다렉토리에서 찾게 해줘야함.
+app.set("views", path.join(__dirname, "views"));
 app.use(cookieParser()); // 쿠키를 가져옴
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,8 +67,8 @@ app.use(function (req, res, next) {
 // app.use('경로', 라우터) 형태
 
 // 주어진 디렉토리에서 파일을 전달하는 미들웨어
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+// app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 // app.use(express.static("css"));
 app.use("/user", userRouter);
 app.use("/video", videoRouter);

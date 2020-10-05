@@ -5,6 +5,7 @@
     "author": "Jinho",
     "license": "ISC",
     "dependencies": {
+        "@babel/cli": "^7.11.6",
         "@babel/core": "^7.11.6",
         "@babel/node": "^7.10.5",
         "@babel/polyfill": "^7.11.5",
@@ -35,19 +36,23 @@
         "passport-local": "^1.0.0",
         "passport-local-mongoose": "^6.0.1",
         "postcss-loader": "^3.0.0",
+        "prettier": "^2.1.2",
         "pug": "^3.0.0",
         "sass-loader": "^7.3.1",
         "webpack": "^4.44.2",
         "webpack-cli": "^3.3.12"
     },
     "scripts": {
-        "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore '.scss' --ignore 'static' ",
-        "dev:assets": "WEBPACK_ENV=development webpack -w",
-        "build:assets": "WEBPACK_ENV=production webpack",
-        "build:server": "babel src --out-dir build",
-        "build": "npm run build:server && npm run build:assets"
+        "dev:server": "nodemon --exec babel-node src/init.js --delay 2 --ignore '.scss' --ignore 'static' ",
+        "dev:assets": "cd src && WEBPACK_ENV=development webpack -w",
+        "build:assets": "cd src && WEBPACK_ENV=production webpack",
+        "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
+        "build": "npm run build:server && npm run build:assets && cp -R src/static build && cp -R src/views build",
+        "prebuild": "rm -rf build",
+        "start": "node build/init.js"
     },
     "devDependencies": {
+        "babel-core": "^7.0.0-bridge.0",
         "eslint": "^7.10.0",
         "eslint-config-prettier": "^6.12.0",
         "eslint-plugin-prettier": "^3.1.4",

@@ -2,27 +2,23 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL,
-{
-    // 그냥 추가하자 
-    useNewUrlParser:true,
-    useFindAndModify:false
+mongoose.set("useUnifiedTopology", true);
+mongoose.connect(process.env.MONGO_URL_PROD, {
+    // 그냥 추가하자
+    useNewUrlParser: true,
+    useFindAndModify: false,
 });
 
 const db = mongoose.connection;
 
-const handleOpen = ()=> console.log("✅Connected to DB on : //localhost:27017");
-const handleError = ()=> console.log("❌Error");
+const handleOpen = () =>
+    console.log("✅Connected to DB on : //localhost:27017");
+const handleError = () => console.log("❌Error");
 
 db.once("open", handleOpen);
-db.on("error", handleError)
-
-
-
+db.on("error", handleError);
 
 // // fake Database
-
-
 
 // export const videoList = [
 //     {
@@ -62,4 +58,3 @@ db.on("error", handleError)
 //         }
 //     }
 // ]
-

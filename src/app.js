@@ -50,6 +50,7 @@ app.use(
 // 해독된 쿠키정보 (id, email등)가 일로 넘어온다.
 app.use(passport.initialize()); // passport구동
 
+// 템플릿에 변수 사용할 수 있게 해주는 미들웨어와 같음
 app.use(flash());
 
 // -> id가 여기로 넘겨지면 passport.js의 deserialize함수 실행된다.

@@ -9,6 +9,8 @@ html(lang="en")
         link(rel="stylesheet", href="../../static/styles.css")
         
     body
+        if messages.info
+            span=messages.info
         include ../partials/header
         
         main

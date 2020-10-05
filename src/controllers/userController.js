@@ -41,6 +41,7 @@ export const postLogin = passport.authenticate("local", {
     // 디비에 잇는 정보와 대조하여 로그인시키고 로그인된 정보를 브라우저 쿠키에 저장시킨다.
     failureRedirect: routes.login,
     successRedirect: routes.home,
+    successFlash: "Welcome!",
     //failureFlash: "Invalid username or password.",
 });
 

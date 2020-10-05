@@ -11,7 +11,10 @@ export const home = async (req, res) => {
     // but async를 사용한다면 비디오가 모두 업로드될 때까지 홈페이지를 렌더링하지 않는다.
 
     try {
+        // "info"는 사용자 마음대로 정의 가능 ex) "potato"
+        // 템플릿에서 변수로 사용 가능!
         req.flash("info", "welcome");
+
         const videos = await Video.find({}).sort({ _id: -1 }); // 모델을 통해 데이터베이스에 있는 모든 비디오들을 가져오게된다.
         // Video.find() 작업이 끝날때까지 기다려줘
         // 즉 비디오를 디비에서 다 가져오면 그때 렌더링 해라 이뜻.

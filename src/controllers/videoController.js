@@ -10,7 +10,7 @@ export const home = async (req, res) => {
     // async를 사용하지 않는다면 많은 수의 비디오가 아직 업로드 되지 않았다(디비에서 아직 꺼내오지 못했다 하더라도) 하더라도 홈페이지를 렌더링함 (노드는 비동기프로그래밍 기반)
     // but async를 사용한다면 비디오가 모두 업로드될 때까지 홈페이지를 렌더링하지 않는다.
 
-    console.log(req.user);
+    req.flash("welcome");
     try {
         const videos = await Video.find({}).sort({ _id: -1 }); // 모델을 통해 데이터베이스에 있는 모든 비디오들을 가져오게된다.
         // Video.find() 작업이 끝날때까지 기다려줘

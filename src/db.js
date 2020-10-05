@@ -3,11 +3,16 @@ import dotenv from "dotenv";
 dotenv.config();
 
 mongoose.set("useUnifiedTopology", true);
-mongoose.connect(process.env.MONGO_URL_PROD, {
-    // 그냥 추가하자
-    useNewUrlParser: true,
-    useFindAndModify: false,
-});
+mongoose.connect(
+    process.env.MONGO_URL_PROD
+        ? process.env.MONGO_URL_PROD
+        : process.env.MONGO_URL,
+    {
+        // 그냥 추가하자
+        useNewUrlParser: true,
+        useFindAndModify: false,
+    },
+);
 
 const db = mongoose.connection;
 

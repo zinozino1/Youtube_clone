@@ -20,6 +20,7 @@ import globalRouter from "./routers/globalRouter";
 import { localsMiddleWare } from "./middlewares";
 import connect_flash from "connect-flash";
 import routes from "./routes";
+import flash from "express-flash";
 import "./passport"; // 패스포트 준비
 import { apiRouter } from "./routers/apiRouter";
 const app = express();
@@ -48,6 +49,8 @@ app.use(
 );
 // 해독된 쿠키정보 (id, email등)가 일로 넘어온다.
 app.use(passport.initialize()); // passport구동
+
+app.use(flash());
 
 // -> id가 여기로 넘겨지면 passport.js의 deserialize함수 실행된다.
 // -> deserialize함수가 실행되면 req.user정보가 미들웨어로 합류하게되어서 모든 라우터에서 시용 가능하게 된다.
